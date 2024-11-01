@@ -5,7 +5,7 @@ import java.util.*;
 
 class Solution {
     public int solution(String[][] clothes) {
-        int answer = 1;
+        int answer = 0;
         
         HashMap<String,Integer> map = new HashMap<>();
         for(int i=0; i<clothes.length; i++){
@@ -18,15 +18,17 @@ class Solution {
             }
         }
         
-        Set<String> set = map.keySet();
+        
+        Set<String> keySet = map.keySet();
         if(map.size()==1){
             answer = clothes.length;
         }else{
-            for(String k : set){
-                int curVal = map.get(k);
-                answer *= curVal + 1;
+            int val = 1;
+            for (String k:keySet){
+                val *= map.get(k);
             }
-            answer -= 1;
+            answer += clothes.length;
+            answer += val;
         }
         
         
