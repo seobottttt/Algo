@@ -1,8 +1,9 @@
 -- 코드를 입력하세요
-SELECT o.animal_id, o.NAME
-from ANIMAL_OUTS o
-left join ANIMAL_ins i
-on o.animal_id = i.animal_id
-where i.animal_id is null
-order by o.animal_id
-
+select animal_id, name
+from(
+select A.animal_id as lose, B.animal_id , B.animal_type, B.name
+from animal_ins A right join animal_outs B
+on A.animal_id = B.animal_id
+)
+where lose is null
+order by 1
