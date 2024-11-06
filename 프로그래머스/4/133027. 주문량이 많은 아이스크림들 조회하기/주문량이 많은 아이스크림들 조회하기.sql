@@ -1,19 +1,14 @@
--- 코드를 입력하세요
-
--- 7월 맛별 총 주문량 
--- SELECT FLAVOR,sum(total_order) as TOTAL_ORDER from JULY group by flavor
-
--- 상반기 맛별 총 주문량
--- select flavor, sum(TOTAL_ORDER) as TOTAL_ORDER from FIRST_HALF group by flavor
-
-
 select flavor
-from(
-select A.FLAVOR , (A.TOTAL_ORDER + B.TOTAL_ORDER) as TOTAL_ORDER
-from (SELECT FLAVOR,sum(total_order) as TOTAL_ORDER from JULY group by flavor
-) A, (select flavor, sum(TOTAL_ORDER) as TOTAL_ORDER from FIRST_HALF group by flavor
-) B
-where A.FLAVOR = B.FLAVOR
-order by 2 desc
+from (
+select A.flavor, A.total_order + B.total_order as total_order
+from (select sum(total_order) as total_order, flavor
+from FIRST_HALF
+group by flavor) A,
+(select sum(total_order) as total_order, flavor
+from july
+group by flavor) B
+where A.flavor = B.flavor
+order by A.total_order + B.total_order desc
 )
-where rownum <= 3
+where rownum <=3
+    
